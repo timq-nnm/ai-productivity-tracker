@@ -1,0 +1,21 @@
+# ─── FastAPI Backend ───────────────────────────────────────────────────────────
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: ai-productivity-tracker-backend
+    ports:
+      - "8888:8888"
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./data.db
+      - GIGACHAT_API_KEY=${GIGACHAT_API_KEY}
+      - DEBUG=true
+    volumes:
+      - .:/app
+      - chroma_data:/app/chroma_db
+    restart: unless-stopped
+
+# ─── Volume ───────────────────────────────────────────────────────────────────
+volumes:
+  chroma_data:
